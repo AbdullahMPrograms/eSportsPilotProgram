@@ -1,4 +1,4 @@
 # eSportsPilotProgram
-Culimating for ICS4U
+Culminating for ICS4U
 
 Optical Image Recognition for various eSports titles
