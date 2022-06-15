@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Screen {
 
-	private static Rectangle captureRect = new Rectangle(176, 1255, 241, 5);
+	private static Rectangle captureRect = new Rectangle(992, 140, 577, 5);
 
 	public static Rectangle getCaptureRect() {
 
