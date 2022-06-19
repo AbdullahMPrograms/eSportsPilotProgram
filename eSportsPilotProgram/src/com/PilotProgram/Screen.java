@@ -6,6 +6,7 @@ import java.awt.Robot;
 import java.awt.image.BufferedImage;
 
 public class Screen {
+	static BufferedImage screenFullImage = null;
 
 	private static Rectangle captureRect = new Rectangle(176, 1255, 241, 5);
 
@@ -13,7 +14,11 @@ public class Screen {
 		return captureRect;
 	}
 
-	public static void setCaptureRect(int x, int y, int length, int width) {
+	public static void setCaptureRect() {
+		captureRect = new Rectangle(Config.getX(), Config.getY(), Config.getLength(), Config.getWidth());
+	}
+
+	public static void setCaptureRectGUI(int x, int y, int length, int width) {
 		captureRect = new Rectangle(x, y, length, width);
 	}
 
@@ -24,9 +29,89 @@ public class Screen {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-		getCaptureRect();
 
 		BufferedImage screenFullImage = robot.createScreenCapture(getCaptureRect());
 		return screenFullImage;
 	}
+
+	public static int countHealthApex() {
+		screenFullImage = getBufferedImage();
+		int countHealth = 0;
+
+		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
+			int c = screenFullImage.getRGB(j, 1);
+
+			int red = (c & 0xff0000) >> 16;
+			int green = (c & 0xff00) >> 8;
+			int blue = c & 0xff;
+
+			if (red >= Config.getR() && green >= Config.getG() && blue >= Config.getB()) {
+				countHealth++;
+			}
+
+		}
+
+		return countHealth;
+	}
+
+	public static int countHealthApexY() {
+		screenFullImage = Screen.getBufferedImage();
+		int countHealthY = 0;
+
+		for (int k = 0; k < (screenFullImage.getHeight()); k++) {
+			int c = screenFullImage.getRGB(1, k);
+
+			int blue = c & 0xff;
+			int green = (c & 0xff00) >> 8;
+			int red = (c & 0xff0000) >> 16;
+
+			if (red >= Config.getR() && green >= Config.getG() && blue >= Config.getB()) {
+				countHealthY++;
+			}
+		}
+
+		return countHealthY;
+
+	}
+
+	public static int countHealthD2() {
+		screenFullImage = getBufferedImage();
+		int countHealth = 0;
+
+		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
+			int c = screenFullImage.getRGB(j, 1);
+
+			int red = (c & 0xff0000) >> 16;
+			int green = (c & 0xff00) >> 8;
+			int blue = c & 0xff;
+
+			if (red >= Config.getR() && green >= Config.getG() && blue >= Config.getB()) {
+				countHealth++;
+			}
+
+		}
+
+		return countHealth;
+	}
+
+	public static int countHealthValhiem() {
+		screenFullImage = getBufferedImage();
+		int countHealth = 0;
+
+		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
+			int c = screenFullImage.getRGB(j, 1);
+
+			int red = (c & 0xff0000) >> 16;
+			int green = (c & 0xff00) >> 8;
+			int blue = c & 0xff;
+
+			if (red >= Config.getR() && green <= Config.getG() && blue <= Config.getB()) {
+				countHealth++;
+			}
+
+		}
+
+		return countHealth;
+	}
+
 }

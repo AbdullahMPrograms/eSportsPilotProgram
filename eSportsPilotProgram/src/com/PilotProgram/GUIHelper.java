@@ -29,6 +29,11 @@ public class GUIHelper extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		Game.setGameInfo();
+
+		Config.readConfig();
+		Screen.setCaptureRect();
+
 		Font font = new Font("Arial", 24);
 		Label title = new Label("Helper Program");
 		title.setFont(font);
@@ -104,7 +109,7 @@ public class GUIHelper extends Application {
 			int length = Integer.valueOf(num3.getText());
 			int width = Integer.valueOf(num4.getText());
 
-			Screen.setCaptureRect(xVar, yVar, length, width);
+			Screen.setCaptureRectGUI(xVar, yVar, length, width);
 		});
 
 		vbox.getChildren().add(title);
@@ -118,13 +123,17 @@ public class GUIHelper extends Application {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if (Game.damageTaken()) {
-					vbox.setStyle("-fx-background-color: #FF0000;");
-				} else {
-					vbox.setStyle("-fx-background-color: #000000;");
+				try {
+					if (Game.damageTaken()) {
+						vbox.setStyle("-fx-background-color: #FF0000;");
+					} else {
+						vbox.setStyle("-fx-background-color: #000000;");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
-		}, 0, 1 * 1000); // x * 1000 = seconds
+		}, 0, 1 * 500); // x * 1000 = seconds
 
 		stage.setScene(scene);
 		stage.setTitle("Culminating Helper");
