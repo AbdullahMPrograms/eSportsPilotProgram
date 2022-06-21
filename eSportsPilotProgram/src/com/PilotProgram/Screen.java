@@ -113,5 +113,39 @@ public class Screen {
 
 		return countHealth;
 	}
+	public static int countScoreFifa() throws Exception {
+		screenFullImage = getBufferedImage();
+		int countGoals = 0;
+
+		System.out.println(OCR.getOCR(screenFullImage).length());
+		String doneOCR = OCR.getOCR(screenFullImage).substring(2, 3);
+		boolean result = doneOCR.matches("[0-9]+");
+		if (result && (OCR.getOCR(screenFullImage).length()) == 5) {
+			countGoals = Integer.valueOf(doneOCR);
+		}
+		// System.out.println(countGoals);
+		return countGoals;
+	}
+	public static int countHealthMinecraft() {
+		screenFullImage = getBufferedImage();
+		int countHealth = 0;
+
+		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
+			for(int k = 0; k <(screenFullImage.getHeight()); k ++) {
+			int c = screenFullImage.getRGB(j, k);
+
+			int red = (c & 0xff0000) >> 16;
+			int green = (c & 0xff00) >> 8;
+			int blue = c & 0xff;
+			//System.out.println(red + "   " + green + "   " + blue);
+			if (red >= Config.getR() && green <= Config.getG() && blue <= Config.getB()) {
+				countHealth++;
+			}
+
+		}
+	}
+
+		return countHealth;
+	}
 
 }
