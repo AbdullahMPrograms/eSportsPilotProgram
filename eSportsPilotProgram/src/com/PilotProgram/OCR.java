@@ -10,27 +10,23 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 public class OCR {
-	
-    
+
 	public static String getOCR(BufferedImage i) throws IOException {
-	Tesseract tesseract = new Tesseract();
-	String text = "";
+		Tesseract tesseract = new Tesseract();
+		String text = "";
 		try {
 
-        tesseract.setDatapath("G:/My Drive/Eclipse/Tess4J/tessdata");
-        File output = new File("screenshot.png");
-        ImageIO.write(i, "png", output);
-        System.out.println("1");
-        // the path of your tess data folder
-        // inside the extracted file
-        text = tesseract.doOCR(output);
-        // path of your image file
-       
-    }
-    catch (TesseractException e) {
-        e.printStackTrace();
-    }
-		 return text;
-}
+			tesseract.setDatapath("G:\\My Drive\\Eclipse\\Tess4J\\tessdata");
+			File output = new File("bufferedimage\\bufferedimage.png");
+			ImageIO.write(i, "png", output);
+
+			text = tesseract.doOCR(output);
+			// System.out.println(text);
+
+		} catch (TesseractException e) {
+			e.printStackTrace();
+		}
+		return text;
+	}
 
 }
