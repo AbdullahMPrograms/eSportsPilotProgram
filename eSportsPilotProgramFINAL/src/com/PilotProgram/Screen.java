@@ -5,24 +5,43 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
+/**
+ * 
+ * @author Oliver Dickins and Abdullah Malik
+ * consists of all methods that have to use the screenshots
+ *
+ */
 public class Screen {
 	static BufferedImage screenFullImage = null;
 
 	private static Rectangle captureRect = new Rectangle(0, 0, 0, 0);
-
+	/**
+	 * returns the dimensions/location to take the screenshot
+	 * @return
+	 */
 	public static Rectangle getCaptureRect() {
 		return captureRect;
 	}
-
+	/**
+	 * sets the dimensions/location to take the screenshot
+	 */
 	public static void setCaptureRect() {
 		captureRect = new Rectangle(Config.getX(), Config.getY(), Config.getLength(), Config.getWidth());
 	}
-
+	/**
+	 * another methods to set the dimensions/location
+	 * @param x
+	 * @param y
+	 * @param length
+	 * @param width
+	 */
 	public static void setCaptureRectGUI(int x, int y, int length, int width) {
 		captureRect = new Rectangle(x, y, length, width);
 	}
-
+	/**
+	 * takes the screenshot
+	 * @return
+	 */
 	public static BufferedImage getBufferedImage() {
 		Robot robot = null;
 		try {
@@ -34,7 +53,10 @@ public class Screen {
 		BufferedImage screenFullImage = robot.createScreenCapture(getCaptureRect());
 		return screenFullImage;
 	}
-
+	/**
+	 * counts the amount of healthbar pixels in apex across a horizontal line 1 pixel tall
+	 * @return
+	 */
 	public static int countHealthApex() {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
@@ -57,7 +79,10 @@ public class Screen {
 
 		return countHealth;
 	}
-
+/**
+ * counts the amount of healthbar pixels in apex on a vertical line 1 pixel wide
+ * @return
+ */
 	public static int countHealthApexY() {
 		screenFullImage = Screen.getBufferedImage();
 		int countHealthY = 0;
@@ -77,7 +102,10 @@ public class Screen {
 		return countHealthY;
 
 	}
-
+	/**
+	 * counts healthbar pixels in Destiny 2
+	 * @return
+	 */
 	public static int countHealthD2() {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
@@ -97,7 +125,10 @@ public class Screen {
 
 		return countHealth;
 	}
-
+	/**
+	 * counts healthbar pixels in Valheim
+	 * @return
+	 */
 	public static int countHealthValhiem() {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
@@ -120,7 +151,10 @@ public class Screen {
 
 		return countHealth;
 	}
-
+	/**
+	 * counts healthbar pixels in Fortnite
+	 * @return
+	 */
 	public static int countHealthFortnite() throws Exception {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
@@ -140,7 +174,12 @@ public class Screen {
 
 		return countHealth;
 	}
-
+/**
+ * counts the score in FIFA with OCR (so horrible to make so many errors)
+ * @param i
+ * @return
+ * @throws IOException
+ */
 	public static int countScoreFifa(int i) throws IOException {
 		screenFullImage = getBufferedImage();
 		int countGoals = 0;
@@ -169,7 +208,10 @@ public class Screen {
 		}
 		return countGoals;
 	}
-
+/**
+ * boolean to check if the "scoreboard" is open in FIFA
+ * @return
+ */
 	public static boolean isBarOpenFifa() {
 		screenFullImage = Screen.getBufferedImage();
 		int barCounter = 0;
@@ -190,15 +232,17 @@ public class Screen {
 			}
 
 		}
-		//System.out.println(barCounter + "     " + textCounter);
+		
 		if (barCounter >= 13 && textCounter != 0) {
-			//System.out.println("bar is open");
 			return true;
 		}
 		return false;
 
 	}
-
+/**
+ * counts the healthbar pixels in minecraft
+ * @return
+ */
 	public static int countHealthMinecraft() {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
