@@ -8,9 +8,18 @@ import javax.imageio.ImageIO;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-
+/**
+ * 
+ * @author Oliver Dickins
+ *this class only does OCR
+ */
 public class OCR {
-
+	/**
+	 * this method does Optical Character Recognition with a given image(screen shot of a game)
+	 * @param i
+	 * @return
+	 * @throws IOException
+	 */
 	public static String getOCR(BufferedImage i) throws IOException {
 		Tesseract tesseract = new Tesseract();
 		String text = "";
