@@ -1,9 +1,17 @@
 package com.PilotProgram;
-
+/**
+ * this class controls functions to do directly with a game
+ * @author Oliver Dickins and Abdullah Malik
+ *
+ */
 public class Game {
 	static String gameInfo = null;
 	static String gameName = null;
-
+/**
+ * sets the information of which game and resolution the user is playing
+ * @param game
+ * @param res
+ */
 	public static void setGameInfo(String game, String res) {
 		String gameRes = null;
 
@@ -12,15 +20,25 @@ public class Game {
 
 		gameInfo = "//" + gameName + "//" + gameRes;
 	}
-
+/**
+ * returns the current game's name
+ * @return
+ */
 	public static String getGameName() {
 		return gameName;
 	}
-
+	/**
+	 * returns the current game's name and res (directory for cfg file)
+	 * @return
+	 */
 	public static String getGameInfo() {
 		return gameInfo;
 	}
-
+/**
+ * this method determines whether the user has taken damage etc. in the game by comparing past values to present and looking for differences. (using Thread.sleep();)
+ * @return
+ * @throws Exception
+ */
 	public static Boolean damageTaken() throws Exception {
 		boolean damageTaken = false;
 
@@ -62,10 +80,8 @@ public class Game {
 
 		if (gameName.equals("Fifa")) {
 			if (Screen.isBarOpenFifa()) {
-				max = Screen.countScoreFifa(0);
-				System.out.println(max);
+				max = Screen.countScoreFifa(0);			
 				Thread.sleep(1000);
-				System.out.println(Screen.countScoreFifa(max));
 				if (Screen.isBarOpenFifa() && max < Screen.countScoreFifa(max)) {
 					damageTaken = true;
 				}
