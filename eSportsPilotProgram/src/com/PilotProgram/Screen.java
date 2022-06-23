@@ -4,11 +4,12 @@ import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Screen {
 	static BufferedImage screenFullImage = null;
 
-	private static Rectangle captureRect = new Rectangle(176, 1255, 241, 5);
+	private static Rectangle captureRect = new Rectangle(0, 0, 0, 0);
 
 	public static Rectangle getCaptureRect() {
 		return captureRect;
@@ -44,6 +45,9 @@ public class Screen {
 			int red = (c & 0xff0000) >> 16;
 			int green = (c & 0xff00) >> 8;
 			int blue = c & 0xff;
+
+			// System.out.println("x: " + j + " Red: " + red + " Green: " + green + " Blue:
+			// " + blue);
 
 			if (red >= Config.getR() && green >= Config.getG() && blue >= Config.getB()) {
 				countHealth++;
@@ -98,12 +102,15 @@ public class Screen {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
 
-		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
-			int c = screenFullImage.getRGB(j, 1);
+		for (int j = 0; j < (screenFullImage.getHeight()); j++) {
+			int c = screenFullImage.getRGB(1, j);
 
 			int red = (c & 0xff0000) >> 16;
 			int green = (c & 0xff00) >> 8;
 			int blue = c & 0xff;
+
+			// System.out.println("x: " + j + " Red: " + red + " Green: " + green + " Blue:
+			// " + blue);
 
 			if (red >= Config.getR() && green <= Config.getG() && blue <= Config.getB()) {
 				countHealth++;
@@ -113,37 +120,102 @@ public class Screen {
 
 		return countHealth;
 	}
-	public static int countScoreFifa() throws Exception {
+
+	public static int countHealthFortnite() throws Exception {
+		screenFullImage = getBufferedImage();
+		int countHealth = 0;
+
+		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
+			int c = screenFullImage.getRGB(j, 1);
+
+			int red = (c & 0xff0000) >> 16;
+			int green = (c & 0xff00) >> 8;
+			int blue = c & 0xff;
+
+			if (red <= Config.getR() && green >= Config.getG() && blue <= Config.getB()) {
+				countHealth++;
+			}
+
+		}
+
+		return countHealth;
+	}
+
+	public static int countScoreFifa(int i) throws IOException {
 		screenFullImage = getBufferedImage();
 		int countGoals = 0;
 
-		System.out.println(OCR.getOCR(screenFullImage).length());
-		String doneOCR = OCR.getOCR(screenFullImage).substring(2, 3);
-		boolean result = doneOCR.matches("[0-9]+");
-		if (result && (OCR.getOCR(screenFullImage).length()) == 5) {
-			countGoals = Integer.valueOf(doneOCR);
+		String doneOCR = OCR.getOCR(screenFullImage);
+		//System.out.println(doneOCR);
+		char temp = '0';
+		if (doneOCR != null) {
+			temp = doneOCR.charAt(0);
+			doneOCR = String.valueOf(temp);
+
+			if (doneOCR.equals("D")) {
+				countGoals = 0;
+
+			} else if (doneOCR.equals("0") || doneOCR.equals("1") || doneOCR.equals("2") || doneOCR.equals("3")
+					|| doneOCR.equals("4") || doneOCR.equals("5") || doneOCR.equals("6") || doneOCR.equals("7")
+					|| doneOCR.equals("8") || doneOCR.equals("9")) {
+				countGoals = Integer.valueOf(doneOCR);
+
+			} else {
+				countGoals = i;
+			}
+
+		} else {
+			countGoals = 1000;
 		}
-		// System.out.println(countGoals);
 		return countGoals;
 	}
+
+	public static boolean isBarOpenFifa() {
+		screenFullImage = Screen.getBufferedImage();
+		int barCounter = 0;
+		int textCounter = 0;
+
+		for (int k = 0; k < (screenFullImage.getHeight()); k++) {
+			int c = screenFullImage.getRGB(13, k);
+
+			int blue = c & 0xff;
+			int green = (c & 0xff00) >> 8;
+			int red = (c & 0xff0000) >> 16;
+
+			if (red >= Config.getR() && green <= Config.getG() && blue <= Config.getB()) {
+				barCounter++;
+			}
+			if (red <= 70 && green <= 40 && blue <= 40) {
+				textCounter++;
+			}
+
+		}
+		
+		if (barCounter >= 13 && textCounter != 0) {
+			return true;
+		}
+		return false;
+
+	}
+
 	public static int countHealthMinecraft() {
 		screenFullImage = getBufferedImage();
 		int countHealth = 0;
 
 		for (int j = 0; j < (screenFullImage.getWidth()); j++) {
-			for(int k = 0; k <(screenFullImage.getHeight()); k ++) {
-			int c = screenFullImage.getRGB(j, k);
+			for (int k = 0; k < (screenFullImage.getHeight()); k++) {
+				int c = screenFullImage.getRGB(j, k);
 
-			int red = (c & 0xff0000) >> 16;
-			int green = (c & 0xff00) >> 8;
-			int blue = c & 0xff;
-			//System.out.println(red + "   " + green + "   " + blue);
-			if (red >= Config.getR() && green <= Config.getG() && blue <= Config.getB()) {
-				countHealth++;
+				int red = (c & 0xff0000) >> 16;
+				int green = (c & 0xff00) >> 8;
+				int blue = c & 0xff;
+				// System.out.println(red + " " + green + " " + blue);
+				if (red >= Config.getR() && green <= Config.getG() && blue <= Config.getB()) {
+					countHealth++;
+				}
+
 			}
-
 		}
-	}
 
 		return countHealth;
 	}
