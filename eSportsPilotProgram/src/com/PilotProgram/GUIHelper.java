@@ -2,6 +2,7 @@ package com.PilotProgram;
 
 import java.awt.AWTException;
 import java.awt.image.BufferedImage;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,7 +30,15 @@ public class GUIHelper extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		Game.setGameInfo();
+		Scanner in = new Scanner(System.in);
+
+		System.out.println("Enter Game Name");
+		String gameName = in.nextLine();
+		System.out.println("Enter Game Res");
+		String gameRes = in.nextLine();
+
+		in.close();
+		Game.setGameInfo(gameName, gameRes);
 
 		Config.readConfig();
 		Screen.setCaptureRect();
@@ -119,22 +128,14 @@ public class GUIHelper extends Application {
 
 		Scene scene = new Scene(vbox, 400, 400);
 		vbox.setStyle("-fx-background-color: #000000;");
-
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				try {
-					if (Game.damageTaken()) {
-						vbox.setStyle("-fx-background-color: #FF0000;");
-					} else {
-						vbox.setStyle("-fx-background-color: #000000;");
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}, 0, 1 * 500); // x * 1000 = seconds
-
+		/*
+		 * timer.schedule(new TimerTask() {
+		 * 
+		 * @Override public void run() { try { if (Game.damageTaken()) {
+		 * vbox.setStyle("-fx-background-color: #FF0000;"); } else {
+		 * vbox.setStyle("-fx-background-color: #000000;"); } } catch (Exception e) {
+		 * e.printStackTrace(); } } }, 0, 1 * 500); // x * 1000 = seconds
+		 */
 		stage.setScene(scene);
 		stage.setTitle("Culminating Helper");
 		stage.show();
