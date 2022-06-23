@@ -27,10 +27,8 @@ public class Game {
 		int max = 0;
 		if (getGameName().equals("Apex")) {
 			max = Screen.countHealthApex();
-			Thread.sleep(500);
-
-			if (max > Screen.countHealthApex() && max != 0 && Screen.countHealthApex() != 0
-					&& Screen.countHealthApexY() != 0) {
+			Thread.sleep(1000);
+			if (max > Screen.countHealthApex() && max != 0 && Screen.countHealthApex() != 0) {
 				damageTaken = true;
 			}
 		}
@@ -63,22 +61,19 @@ public class Game {
 		}
 
 		if (gameName.equals("Fifa")) {
-			max = Screen.countScoreFifa();
-			// System.out.println(max);
-			Thread.sleep(500);
-
-			if (OCR.getOCR(Screen.getBufferedImage()).length() == 5) {
-				String str = OCR.getOCR(Screen.getBufferedImage()).substring(2, 3);
-
-				boolean result = str.matches("[0-9]+");
-
-				if (max < Screen.countScoreFifa() && result == true) {
+			if (Screen.isBarOpenFifa()) {
+				max = Screen.countScoreFifa(0);			
+				Thread.sleep(1000);
+				if (Screen.isBarOpenFifa() && max < Screen.countScoreFifa(max)) {
 					damageTaken = true;
 				}
-			}
+			}else {
+				Thread.sleep(500);
+				}
+			
 		}
-		
-		if(gameName.equals("Minecraft")) {
+
+		if (gameName.equals("Minecraft")) {
 			max = Screen.countHealthMinecraft();
 			Thread.sleep(1000);
 
@@ -86,7 +81,6 @@ public class Game {
 				damageTaken = true;
 			}
 		}
-		
 
 		return damageTaken;
 	}
