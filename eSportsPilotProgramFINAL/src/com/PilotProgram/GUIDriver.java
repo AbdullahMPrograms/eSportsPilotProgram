@@ -18,7 +18,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * This guiDriver is the main controller of the program, used to select games, along with their resolution, and start each games damage detection. 
+ * also includes settings to test haptics ,and exit button
+ * @author Oliver Dickins and Abdullah Malik
+ *
+ */
 public class GUIDriver extends Application {
 	static Boolean done = false;
 
@@ -1022,7 +1027,10 @@ public class GUIDriver extends Application {
 		// <----------- /FIFA ------------->
 
 	}
-
+	/**
+	 * runs GUIDriver
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
